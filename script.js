@@ -190,6 +190,5 @@ function drawSplash() {
       ctx.stroke();
     }
   }
-
   // старт
   showPhoto();
