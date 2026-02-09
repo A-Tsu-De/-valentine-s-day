@@ -1,65 +1,55 @@
 const photos = [
+  "images/1.jpg",
   "images/2.jpg",
   "images/3.jpg",
   "images/4.jpg",
   "images/5.jpg",
   "images/6.jpg",
   "images/7.jpg",
-  "images/1.jpg",
   "images/8.jpg",
 ];
 
-// DOM
+// DOM (ждём, что HTML уже загружен, потому что script подключён с defer)
+const slide = document.getElementById("slide");
 const prev = document.getElementById("prev");
 const next = document.getElementById("next");
-const slider = document.getElementById("slider");
 const counter = document.getElementById("counter");
 
+const slider = document.getElementById("slider");
 const final = document.getElementById("final");
 const restart = document.getElementById("restart");
 
 const overlay = document.getElementById("overlay");
 const closeBtn = document.getElementById("close");
+
 const canvas = document.getElementById("splash");
 const ctx = canvas.getContext("2d");
 
+// ---- страховка: если чего-то нет, покажем понятную ошибку
+if (!slide  !prev  !next  !counter  !slider  !final  !restart  !overlay  !closeBtn || !canvas) {
+  console.error("Не найдены элементы на странице. Проверь index.html (id prev/next/slide/counter и т.д.)");
+}
+
+// ---- состояние
 let index = 0;
 
+// ---- отображение
 function render() {
-    slide.src = photos[index];
-    counter.textContent = '${index + 1} / ${photos.length}';
-    console.log("show:", slide.src);
-        }
-next.addEventListener("click", () => {
-    index = (index + 1) % photos.length;
-    render()
-    });
-prev.addEventListener("click", () => {
-         index = (index - 1 +  photos.length) % photos.length;
-         render();
-});
-render ();
-
-// отображение
-function setCounter() {
+  slide.src = photos[index];
   counter.textContent = ${index + 1} / ${photos.length};
 }
-function showPhoto() {
-  slide.src = photos[index];
-  setCounter();
-}
 
-// финальный экран
 function showFinal() {
   slider.classList.add("hidden");
   final.classList.remove("hidden");
 }
+
 function hideFinal() {
   final.classList.add("hidden");
   slider.classList.remove("hidden");
 }
 
-// пасхалка (быстрое листание)
+// ---- пасхалка: быстрое пролистывание
 let taps = [];
 const LIMIT = 7;
 const INTERVAL = 1700;
@@ -74,7 +64,7 @@ function registerFastAction() {
   }
 }
 
-// навигация
+// ---- навигация
 function goNext() {
   registerFastAction();
 
@@ -83,7 +73,7 @@ function goNext() {
     return;
   }
   index += 1;
-  showPhoto();
+  render();
 }
 
 function goPrev() {
@@ -92,12 +82,12 @@ function goPrev() {
   if (!final.classList.contains("hidden")) {
     hideFinal();
     index = photos.length - 1;
-    showPhoto();
+    render();
     return;
   }
 
   index = (index - 1 + photos.length) % photos.length;
-  showPhoto();
+  render();
 }
 
 next.addEventListener("click", goNext);
@@ -106,7 +96,7 @@ prev.addEventListener("click", goPrev);
 restart.addEventListener("click", () => {
   index = 0;
   hideFinal();
-  showPhoto();
+  render();
 });
 
 // клавиши
@@ -116,7 +106,8 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") goPrev();
 });
 
-// свайп
+// ---- свайп
+const frame = document.getElementById("frame");
 let touchStartX = null;
 let touchStartY = null;
 let touchStartTime = 0;
@@ -148,7 +139,7 @@ frame.addEventListener("touchend", (e) => {
   if (dx >= THRESHOLD) goPrev();
 }, { passive: true });
 
-// overlay + брызги
+// ---- overlay + брызги
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -178,30 +169,32 @@ function drawSplash() {
   ctx.fillStyle = "rgba(255,255,255,0.6)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  for (let i = 0; i < 70; i++) {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height;
-    const r = 6 + Math.random() * 30;
+        for (let i = 0; i < 70; i++) {
+          const x = Math.random() * canvas.width;
+          const y = Math.random() * canvas.height;
+          const r = 6 + Math.random() * 30;
 
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(0,0,0,0.08)";
-    ctx.fill();
-  }
-  for (let i = 0; i < 20; i++) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      const len = 50 + Math.random() * 160;
-      const ang = Math.random() * Math.PI * 2;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(0,0,0,0.08)";
+          ctx.fill();
+        }
 
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(x + Math.cos(ang) * len, y + Math.sin(ang) * len);
-      ctx.strokeStyle = "rgba(0,0,0,0.08)";
-      ctx.lineWidth = 4 + Math.random() * 7;
-      ctx.lineCap = "round";
-      ctx.stroke();
-    }
-  }
-  // старт
-  showPhoto();
+        for (let i = 0; i < 20; i++) {
+          const x = Math.random() * canvas.width;
+          const y = Math.random() * canvas.height;
+          const len = 50 + Math.random() * 160;
+          const ang = Math.random() * Math.PI * 2;
+
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + Math.cos(ang) * len, y + Math.sin(ang) * len);
+          ctx.strokeStyle = "rgba(0,0,0,0.08)";
+          ctx.lineWidth = 4 + Math.random() * 7;
+          ctx.lineCap = "round";
+          ctx.stroke();
+        }
+      }
+
+      // старт
+      render();
