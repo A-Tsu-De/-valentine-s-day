@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>❤️ For You</title>
+    <title>Happy Valentine’s Day ❤️</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -14,25 +14,22 @@
 </header>
 
 <main class="wrap">
+
+    <!-- SLIDER -->
     <section class="slider" id="slider">
-        <button class="nav" id="prev" aria-label="Previous">←</button>
+        <button class="nav" id="prev" aria-label="Previous photo">←</button>
 
         <div class="frame" id="frame">
-            <img id="slide" src="images/1.jpg.jpeg" alt="photo" draggable="false" width="2316" height="3088">
-            <img id="slide" src="images/2.jpg.jpeg" alt="photo" draggable="false" width="2316" height="3088">
-            <img id="slide" src="images/3.jpg.JPG" alt="photo" draggable="false" width="959" height="1280">
-            <img id="slide" src="images/4.jpg.JPG" alt="photo" draggable="false" width="959" height="1280">
-            <img id="slide" src="images/5.jpg.JPG" alt="photo" draggable="false" width="1280" height="960">
-            <img id="slide" src="images/6.jpg.JPG" alt="photo" draggable="false" width="1280" height="960">
-            <img id="slide" src="images/7.jpg.jpeg" alt="photo" draggable="false" width="2316" height="3088">
-            <img id="slide" src="images/8.jpg.jpeg" alt="photo" draggable="false" width="2316" height="3088">
+            <!-- ВАЖНО: тут должна быть ТОЛЬКО ОДНА картинка -->
+            <img id="slide" src="images/1.jpg.jpeg" alt="photo" draggable="false">
             <div class="counter" id="counter">1 / 1</div>
             <div class="swipeHint">swipe ↔</div>
         </div>
 
-        <button class="nav" id="next" aria-label="Next">→</button>
+        <button class="nav" id="next" aria-label="Next photo">→</button>
     </section>
 
+    <!-- FINAL -->
     <section id="final" class="final hidden">
         <div class="finalCard">
             <div class="finalTitle">I love you ❤️</div>
@@ -43,12 +40,14 @@
             <button id="restart" class="btn">Ещё раз →</button>
         </div>
     </section>
+
 </main>
 
-<!-- Пасхалка -->
+<!-- EASTER EGG -->
 <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
     <canvas id="splash"></canvas>
-    <div class="jokeCard" role="document">
+
+    <div class="jokeCard" role="document" aria-label="Joke">
         <div class="jokeTitle">Thanks for masturbating 😈</div>
         <div class="jokeSub">Slow down, tiger 🐯</div>
         <button id="close" class="btn small">ok ok 😂</button>
@@ -58,4 +57,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
