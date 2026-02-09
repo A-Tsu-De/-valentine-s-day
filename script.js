@@ -1,12 +1,12 @@
 const photos = [
-  "images/2.jpg.jpeg",
-  "images/3.jpg.JPG",
-  "images/4.jpg.JPG",
-  "images/5.jpg.JPG",
-  "images/6.jpg.JPG",
-  "images/7.jpg.jpeg",
-  "images/1.jpg.jpeg",
-  "images/8.jpg.jpeg",
+  "images/2.jpg",
+  "images/3.jpg",
+  "images/4.jpg",
+  "images/5.jpg",
+  "images/6.jpg",
+  "images/7.jpg",
+  "images/1.jpg",
+  "images/8.jpg",
 ];
 
 // DOM
