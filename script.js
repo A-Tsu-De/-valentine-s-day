@@ -10,11 +10,9 @@ const photos = [
 ];
 
 // DOM
-const slide = document.getElementById("slide");
 const prev = document.getElementById("prev");
 const next = document.getElementById("next");
 const slider = document.getElementById("slider");
-const frame = document.getElementById("frame");
 const counter = document.getElementById("counter");
 
 const final = document.getElementById("final");
@@ -26,6 +24,21 @@ const canvas = document.getElementById("splash");
 const ctx = canvas.getContext("2d");
 
 let index = 0;
+
+function render() {
+    slide.src = photos[index];
+    counter.textContent = '${index + 1} / ${photos.length}';
+    console.log("show:", slide.src);
+        }
+next.addEventListener("click", () => {
+    index = (index + 1) % photos.length;
+    render()
+    });
+prev.addEventListener("click", () => {
+         index = (index - 1 +  photos.length) % photos.length;
+         render();
+});
+render ();
 
 // отображение
 function setCounter() {
