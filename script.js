@@ -1,11 +1,11 @@
 const photos = [
-  "images/1.jpg.jpeg",
   "images/2.jpg.jpeg",
   "images/3.jpg.JPG",
   "images/4.jpg.JPG",
   "images/5.jpg.JPG",
   "images/6.jpg.JPG",
   "images/7.jpg.jpeg",
+  "images/1.jpg.jpeg",
   "images/8.jpg.jpeg",
 ];
 
