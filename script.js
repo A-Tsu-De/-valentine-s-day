@@ -1,4 +1,3 @@
-// ТВОИ ФАЙЛЫ (как у тебя сейчас в images/)
 const photos = [
   "images/1.jpg.jpeg",
   "images/2.jpg.jpeg",
