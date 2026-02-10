@@ -1,200 +1,54 @@
-const photos = [
-  "images/1.jpg",
-  "images/2.jpg",
-  "images/3.jpg",
-  "images/4.jpg",
-  "images/5.jpg",
-  "images/6.jpg",
-  "images/7.jpg",
-  "images/8.jpg",
-];
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ DOM loaded, script running");
 
-// DOM (ждём, что HTML уже загружен, потому что script подключён с defer)
-const slide = document.getElementById("slide");
-const prev = document.getElementById("prev");
-const next = document.getElementById("next");
-const counter = document.getElementById("counter");
+  const photos = [
+    "images/1.jpg",
+    "images/2.jpg",
+    "images/3.jpg",
+    "images/4.jpg",
+    "images/5.jpg",
+    "images/6.jpg",
+    "images/7.jpg",
+    "images/8.jpg",
+  ];
 
-const slider = document.getElementById("slider");
-const final = document.getElementById("final");
-const restart = document.getElementById("restart");
+  const slide = document.getElementById("slide");
+  const prev = document.getElementById("prev");
+  const next = document.getElementById("next");
+  const counter = document.getElementById("counter");
 
-const overlay = document.getElementById("overlay");
-const closeBtn = document.getElementById("close");
+  console.log({ slide, prev, next, counter });
 
-const canvas = document.getElementById("splash");
-const ctx = canvas.getContext("2d");
-
-// ---- страховка: если чего-то нет, покажем понятную ошибку
-if (!slide  !prev  !next  !counter  !slider  !final  !restart  !overlay  !closeBtn || !canvas) {
-  console.error("Не найдены элементы на странице. Проверь index.html (id prev/next/slide/counter и т.д.)");
-}
-
-// ---- состояние
-let index = 0;
-
-// ---- отображение
-function render() {
-  slide.src = photos[index];
-  counter.textContent = ${index + 1} / ${photos.length};
-}
-
-function showFinal() {
-  slider.classList.add("hidden");
-  final.classList.remove("hidden");
-}
-
-function hideFinal() {
-  final.classList.add("hidden");
-  slider.classList.remove("hidden");
-}
-
-// ---- пасхалка: быстрое пролистывание
-let taps = [];
-const LIMIT = 7;
-const INTERVAL = 1700;
-
-function registerFastAction() {
-  const now = Date.now();
-  taps.push(now);
-  taps = taps.filter(t => now - t < INTERVAL);
-  if (taps.length >= LIMIT) {
-    showJoke();
-    taps = [];
-  }
-}
-
-// ---- навигация
-function goNext() {
-  registerFastAction();
-
-  if (index === photos.length - 1) {
-    showFinal();
+  if (!slide  !prev  !next || !counter) {
+    alert("❌ Не найдены элементы. Проверь id: slide/prev/next/counter в index.html");
     return;
   }
-  index += 1;
-  render();
-}
 
-function goPrev() {
-  registerFastAction();
+  let index = 0;
 
-  if (!final.classList.contains("hidden")) {
-    hideFinal();
-    index = photos.length - 1;
+  function render() {
+    slide.src = photos[index];
+    counter.textContent = ${index + 1} / ${photos.length};
+    console.log("➡️ render", index, slide.src);
+  }
+
+  next.addEventListener("click", () => {
+    console.log("👉 NEXT click");
+    index = (index + 1) % photos.length;
     render();
-    return;
-  }
+  });
 
-  index = (index - 1 + photos.length) % photos.length;
+  prev.addEventListener("click", () => {
+    console.log("👈 PREV click");
+    index = (index - 1 + photos.length) % photos.length;
+    render();
+  });
+
+  // Если картинка не грузится — покажем это в консоли
+  slide.addEventListener("error", () => {
+    console.error("❌ Не загрузилась картинка:", slide.src);
+    alert("Не загрузилась картинка: " + slide.src);
+  });
+
   render();
-}
-
-next.addEventListener("click", goNext);
-prev.addEventListener("click", goPrev);
-
-restart.addEventListener("click", () => {
-  index = 0;
-  hideFinal();
-  render();
 });
-
-// клавиши
-window.addEventListener("keydown", (e) => {
-  if (!overlay.classList.contains("hidden")) return;
-  if (e.key === "ArrowRight") goNext();
-  if (e.key === "ArrowLeft") goPrev();
-});
-
-// ---- свайп
-const frame = document.getElementById("frame");
-let touchStartX = null;
-let touchStartY = null;
-let touchStartTime = 0;
-
-frame.addEventListener("touchstart", (e) => {
-  if (!e.touches || e.touches.length !== 1) return;
-  const t = e.touches[0];
-  touchStartX = t.clientX;
-  touchStartY = t.clientY;
-  touchStartTime = Date.now();
-}, { passive: true });
-
-frame.addEventListener("touchend", (e) => {
-  if (touchStartX === null || touchStartY === null) return;
-
-  const t = e.changedTouches[0];
-  const dx = t.clientX - touchStartX;
-  const dy = t.clientY - touchStartY;
-  const dt = Date.now() - touchStartTime;
-
-  touchStartX = null;
-  touchStartY = null;
-
-  if (Math.abs(dy) > Math.abs(dx)) return;
-  if (dt > 700) return;
-
-  const THRESHOLD = 45;
-  if (dx <= -THRESHOLD) goNext();
-  if (dx >= THRESHOLD) goPrev();
-}, { passive: true });
-
-// ---- overlay + брызги
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-function showJoke() {
-  overlay.classList.remove("hidden");
-  drawSplash();
-  setTimeout(hideJoke, 2800);
-}
-
-function hideJoke() {
-  overlay.classList.add("hidden");
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-closeBtn.addEventListener("click", hideJoke);
-overlay.addEventListener("click", (e) => {
-  if (e.target === overlay || e.target === canvas) hideJoke();
-});
-
-function drawSplash() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  ctx.fillStyle = "rgba(255,255,255,0.6)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        for (let i = 0; i < 70; i++) {
-          const x = Math.random() * canvas.width;
-          const y = Math.random() * canvas.height;
-          const r = 6 + Math.random() * 30;
-
-          ctx.beginPath();
-          ctx.arc(x, y, r, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(0,0,0,0.08)";
-          ctx.fill();
-        }
-
-        for (let i = 0; i < 20; i++) {
-          const x = Math.random() * canvas.width;
-          const y = Math.random() * canvas.height;
-          const len = 50 + Math.random() * 160;
-          const ang = Math.random() * Math.PI * 2;
-
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + Math.cos(ang) * len, y + Math.sin(ang) * len);
-          ctx.strokeStyle = "rgba(0,0,0,0.08)";
-          ctx.lineWidth = 4 + Math.random() * 7;
-          ctx.lineCap = "round";
-          ctx.stroke();
-        }
-      }
-
-      // старт
-      render();

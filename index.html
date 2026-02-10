@@ -14,45 +14,18 @@
 </header>
 
 <main class="wrap">
-
-    <!-- SLIDER -->
     <section class="slider" id="slider">
-        <button class="nav" id="prev" type="button" aria-label="Previous photo">←</button>
+        <button class="nav" id="prev" type="button">←</button>
 
         <div class="frame" id="frame">
-            <!-- РОВНО ОДНА картинка -->
-            <img id="slide" src="images/1.jpg" alt="photo" draggable="false">
-            <div class="counter" id="counter">1 / 8</div>
-            <div class="swipeHint">swipe ↔</div>
+            <img id="slide" alt="photo" draggable="false">
+            <div class="counter" id="counter"></div>
         </div>
 
-        <button class="nav" id="next" type="button" aria-label="Next photo">→</button>
+        <button class="nav" id="next" type="button">→</button>
     </section>
-
-    <!-- FINAL -->
-    <section id="final" class="final hidden">
-        <div class="finalCard">
-            <div class="finalTitle">I love you ❤️</div>
-            <div class="finalText">
-                Спасибо, что ты есть.<br/>
-                Этот маленький сайт — чтобы ты мог открывать его всегда 🥰
-            </div>
-            <button id="restart" class="btn" type="button">Ещё раз →</button>
-        </div>
-    </section>
-
 </main>
 
-<!-- EASTER EGG -->
-<div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
-    <canvas id="splash"></canvas>
-    <div class="jokeCard" role="document">
-        <div class="jokeTitle">Thanks for masturbating 😈</div>
-        <div class="jokeSub">Slow down, tiger 🐯</div>
-        <button id="close" class="btn small" type="button">ok ok 😂</button>
-    </div>
-</div>
-
-<script defer src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
