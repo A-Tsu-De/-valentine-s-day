@@ -1,54 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ DOM loaded, script running");
+const images = ["1.jpg", "2.jpg", "3.jpg","4.jpg","5.jpg","6.jpg","7.jpg","8.jpg"]; // Массив фото
+let currentIndex = 0; // Индекс текущей картинки
+const imgElement = document.getElementById("image");
 
-  const photos = [
-    "images/1.jpg",
-    "images/2.jpg",
-    "images/3.jpg",
-    "images/4.jpg",
-    "images/5.jpg",
-    "images/6.jpg",
-    "images/7.jpg",
-    "images/8.jpg",
-  ];
+// Функция переключения
+function changeImage(direction) {
+    currentIndex += direction;
 
-  const slide = document.getElementById("slide");
-  const prev = document.getElementById("prev");
-  const next = document.getElementById("next");
-  const counter = document.getElementById("counter");
+    // Зацикливание: если конец, то в начало
+    if (currentIndex >= images.length) currentIndex = 0;
+    if (currentIndex < 0) currentIndex = images.length - 1;
 
-  console.log({ slide, prev, next, counter });
+    imgElement.src = images[currentIndex]; // Смена src [1]
+}
 
-  if (!slide  !prev  !next || !counter) {
-    alert("❌ Не найдены элементы. Проверь id: slide/prev/next/counter в index.html");
-    return;
-  }
-
-  let index = 0;
-
-  function render() {
-    slide.src = photos[index];
-    counter.textContent = ${index + 1} / ${photos.length};
-    console.log("➡️ render", index, slide.src);
-  }
-
-  next.addEventListener("click", () => {
-    console.log("👉 NEXT click");
-    index = (index + 1) % photos.length;
-    render();
-  });
-
-  prev.addEventListener("click", () => {
-    console.log("👈 PREV click");
-    index = (index - 1 + photos.length) % photos.length;
-    render();
-  });
-
-  // Если картинка не грузится — покажем это в консоли
-  slide.addEventListener("error", () => {
-    console.error("❌ Не загрузилась картинка:", slide.src);
-    alert("Не загрузилась картинка: " + slide.src);
-  });
-
-  render();
-});
+// Обработчики событий
+document.getElementById("prev").addEventListener("click", () => changeImage(-1));
+document.getElementById("next").addEventListener("click", () => changeImage(1));
