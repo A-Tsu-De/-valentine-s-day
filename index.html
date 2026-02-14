@@ -1,38 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Happy Valentine’s Day ❤️</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Happy Valentines Day</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+<div class="slider">
+    <button class="prev heart-btn" aria-label="Previous">
+        <span>‹</span>
+    </button>
 
-<header class="top">
-    <h1>Happy Valentine’s Day ❤️</h1>
-    <p class="hint">Листай медленно 😏</p>
-</header>
+    <div class="slider-wrapper">
+        <!-- ВАЖНО: id="slide" -->
+        <img id="slide" src="images/1.jpg" alt="here we are" />
+    </div>
 
-        <div class="gallery">
-            <div class="photo">
-                <img src="images/1.jpg" class="shown">
-                <img src="images/2.jpg">
-                <img src="images/3.jpg">
-                <img src="images/4.jpg">
-                <img src="images/5.jpg">
-                <img src="images/6.jpg">
-                <img src="images/7.jpg">
-                <img src="images/8.jpg">
-            </div>
-        <div class="tabs">
-            <input type="button" class="prev" value="назад">
-            <input type="button" class="next" value="вперед">
-        </div>
-        </div>
-<img src="images/1.jpg" id="img1" onclick="changeImg()" alt="просто мы">
+    <button class="next heart-btn" aria-label="Next">
+        <span>›</span>
+    </button>
+    <div class="reaction" id="reaction"></div>
+</div>
 
-
-
-    <script type="text/javascript" src ="script.js"  defer></script>
+<script src="script.js"></script>
 </body>
 </html>
