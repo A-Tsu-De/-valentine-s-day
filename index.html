@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Happy Valentine’s Day ❤️</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -13,21 +13,26 @@
     <p class="hint">Листай медленно 😏</p>
 </header>
 
-<main class="wrap">
-    <section class="slider" id="slider">
-        <button class="nav" id="prev" type="button">←</button>
-
-        <div class="frame" id="frame">
-            <img id="slide" src="images/1.jpg" alt="photo" draggable="false">
-            <div class="counter" id="counter">1 / 8</div>
-            <div class="swipeHint">swipe ↔️</div>
-
+        <div class="gallery">
+            <div class="photo">
+                <img src="images/1.jpg" class="shown"></img>
+                <img src="images/2.jpg"></img>
+                <img src="images/3.jpg"></img>
+                <img src="images/4.jpg"></img>
+                <img src="images/5.jpg"></img>
+                <img src="images/6.jpg"></img>
+                <img src="images/7.jpg"></img>
+                <img src="images/8.jpg"></img>
+            </div>
+        <div class="tabs">
+            <input type="button" class="prev" value="назад">
+            <input type="button" class="next" value="вперед">
         </div>
+        </div>
+<img src="images/1.jpg" id="img1" onclick="changeImg()" alt="просто мы">
 
-        <button class="nav" id="next" type="button">→</button>
-    </section>
-</main>
 
-<script src="script.js"></script>
+
+    <script type="text/javascript" src ="script.js"  defer></script>
 </body>
 </html>
