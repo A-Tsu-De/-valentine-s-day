@@ -1,29 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Happy Valentines Day</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Valentine’s Day</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+<!-- Капли поверх всего -->
+<div id="dropsLayer" class="drops-layer"></div>
+
 <div class="slider">
-    <button class="prev heart-btn" aria-label="Previous">
-        <span>‹</span>
+    <button class="heart-btn prev" aria-label="Previous">
+        <span>❤️</span>
     </button>
 
     <div class="slider-wrapper">
-        <!-- ВАЖНО: id="slide" -->
-        <img id="slide" src="images/1.jpg" alt="here we are" />
+        <img id="slide" src="images/1.jpg" alt="our photo" />
     </div>
+    <div id="reaction" class="reaction"></div>
 
-    <button class="next heart-btn" aria-label="Next">
-        <span>›</span>
+
+    <button class="heart-btn next" aria-label="Next">
+        <span>❤️</span>
     </button>
-    <div class="reaction" id="reaction"></div>
 </div>
 
+<!-- Звуки -->
+<audio id="sound1" src="sounds/mmm.ogg" preload="auto"></audio>
+<audio id="sound2" src="sounds/yes.ogg" preload="auto"></audio>
+<audio id="sound3" src="sounds/more.ogg" preload="auto"></audio>
+<audio id="sound4" src="sounds/faster.ogg" preload="auto"></audio>
+<audio id="sound5" src="sounds/dont_stop.ogg" preload="auto"></audio>
+<audio id="dropsSound" src="sounds/dropssounds.ogg" preload="auto"></audio>
 <script src="script.js"></script>
 </body>
 </html>

@@ -20,6 +20,7 @@ body {
   width: 400px;
   height: 500px;
   overflow: hidden;
+  position: relative;
 }
 
 .slider-wrapper img {
@@ -30,7 +31,7 @@ body {
   display: block;
 }
 
-/* 💖 КНОПКИ-СЕРДЦА */
+/* Кнопки сердце */
 .heart-btn {
   position: absolute;
   width: 60px;
@@ -56,21 +57,15 @@ body {
   border-radius: 50%;
 }
 
-.heart-btn::before {
-  top: -30px;
-  left: 0;
-}
-
-.heart-btn::after {
-  left: 30px;
-  top: 0;
-}
+.heart-btn::before { top: -30px; left: 0; }
+.heart-btn::after  { top: 0; left: 30px; }
 
 .heart-btn span {
   transform: rotate(45deg);
   color: white;
   font-size: 22px;
   line-height: 1;
+  z-index: 2;
 }
 
 .prev { left: -90px; }
@@ -78,26 +73,72 @@ body {
 
 .heart-btn:hover {
   transform: rotate(-45deg) scale(1.08);
-  filter: brightness(0.95);
   transition: 0.2s ease;
 }
 
+/* Фразы */
 .reaction {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.5);
-    font-size: 50px;
-    font-weight: 900;
-    color: white;
-    text-shadow: 0 0 20px rgba(255, 0, 80, 0.8);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 2s ease;
-    z-index: 20;
-   }
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  font-size: 56px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 0 22px rgba(255, 0, 80, 0.85);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 1.2s ease;
+  z-index: 100000; /* выше капель */
+  white-space: nowrap;
+}
 
 .reaction.show {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(3.2);
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(2.8);
+}
+
+.reaction.sync {
+  filter: brightness(1.25);
+}
+
+/* Капли */
+.drops-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 99999;
+}
+
+.drop {
+  position: absolute;
+  top: -10vh;
+  width: 16px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50% 50% 60% 60%;
+  filter: blur(0.2px);
+  opacity: 0.98;
+  animation-name: dropFall;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.drop::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes dropFall {
+  0% { transform: translateY(0) scale(0.9); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(120vh) scale(1.1); opacity: 0; }
 }
